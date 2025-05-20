@@ -52,7 +52,7 @@ const TestDriveModal = ({ isOpen, onClose, carId }) => {
         }
 
         if (foundCar) {
-            setMessage(`Thank you, ${name}! Your Test Drive request for the ${foundCar.name} on ${TestDriveDate} has been received. We will contact you at ${email}.`);
+            setMessage(`${name}Your Test Drive request for the ${foundCar.name} on ${TestDriveDate} has been created.`);
             setIsSuccess(true);
         } else {
             console.warn(`Car with ID ${carId} not found in localStorage.`);
