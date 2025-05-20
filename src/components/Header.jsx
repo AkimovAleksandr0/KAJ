@@ -1,3 +1,4 @@
+// Header component that includes the site title, navigation links, and buttons for browser history navigation.
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaHome, FaCar, FaEnvelope, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
@@ -14,8 +15,12 @@ const Header = () => {
             </div>
             <nav aria-label="Main navigation">
                 <ul>
-                    <li><button onClick={() => navigate(-1)} aria-label="Go back"><FaArrowLeft /></button>
-                    <button onClick={() => navigate(1)} aria-label="Go forward"><FaArrowRight /></button></li>
+                    {/* Buttons for navigating back and forward in browser history */}
+                    <li>
+                        <button onClick={() => navigate(-1)} aria-label="Go back"><FaArrowLeft /></button>
+                        <button onClick={() => navigate(1)} aria-label="Go forward"><FaArrowRight /></button>
+                    </li>
+                    {/* Navigation links to main pages */}
                     <li><Link to="/"><FaHome className={"IconHead"} /> Main Page</Link></li>
                     <li><Link to="/add-car"><FaCar className={"IconHead"} /> Add Car</Link></li>
                     <li><Link to="/media"><FaEnvelope className={"IconHead"} /> Media</Link></li>

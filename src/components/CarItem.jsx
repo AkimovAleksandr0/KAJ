@@ -1,6 +1,8 @@
+// CarItem component that displays a single car's details and provides action buttons.
 import React from 'react';
 
 const CarItem = ({ car, onDelete, onTestDrive }) => {
+    // Download car data as a JSON file
     const handleDownloadJSON = () => {
         if (!car) {
             alert('Car data is not available.');
@@ -37,7 +39,7 @@ const CarItem = ({ car, onDelete, onTestDrive }) => {
             <p><strong>Color:</strong> {car.color}</p>
             <p><strong>Kilometers:</strong> {car.kilometers} km</p>
 
-            {}
+            {/* Action buttons */}
             <button className="delete-button" onClick={() => onDelete(car.id)}>Delete</button>
             <button onClick={() => onTestDrive(car.id)}>Test Drive</button>
             <button className="download-button" onClick={handleDownloadJSON}>Download JSON</button>

@@ -1,27 +1,32 @@
+// CarList component that manages the list of cars, including loading, uploading, and saving functionality.
 import React, { useState, useEffect } from 'react';
 import CarItem from './CarItem';
 
 const CarList = ({ onTestDrive }) => {
+    // State for car list, file name, and drag status
     const [cars, setCars] = useState([]);
     const [fileName, setFileName] = useState('');
     const [isDragging, setIsDragging] = useState(false); // Track drag state
 
+    // Load cars from local storage on mount
     useEffect(() => {
         const _cars = JSON.parse(localStorage.getItem('cars')) || [];
         setCars(_cars);
     }, []);
 
+    // Save cars to state and local storage
     const saveCards = (newCars) => {
         setCars(newCars);
         localStorage.setItem('cars', JSON.stringify(newCars));
     };
 
+    // Delete a car from the list
     const handleDelete = (id) => {
         const updatedCars = cars.filter(car => car.id !== id);
         saveCards(updatedCars);
     };
 
-    // Handle file upload (for both drag-and-drop and file input)
+    // Handle file upload for both input and drag-and-drop
     const handleFileUpload = (file) => {
         if (file) {
             setFileName(file.name);
@@ -71,6 +76,7 @@ const CarList = ({ onTestDrive }) => {
         setIsDragging(false);
     };
 
+    // Save car list to a JSON file
     const handleSaveToJSON = () => {
         const jsonString = JSON.stringify(cars, null, 2);
         const blob = new Blob([jsonString], { type: 'application/json' });
@@ -102,6 +108,7 @@ const CarList = ({ onTestDrive }) => {
                     Save JSON
                 </button>
             </div>
+            {/* Drag-and-drop zone for JSON file upload */}
             <div
                 className={`drop-zone ${isDragging ? 'dragging' : ''}`}
                 onDragOver={handleDragOver}
@@ -109,15 +116,15 @@ const CarList = ({ onTestDrive }) => {
                 onDrop={handleDrop}
             >
                 {isDragging ? "Drop the file here..." : <p>{cars.length === 0 ? (
-                        <p>No cars available. Upload a JSON file to get started.</p>
-                    ) : (fileName) || "No file chosen"}</p>}
+                    <p>No cars available. Upload a JSON file to get started.</p>
+                ) : (fileName) || "No file chosen"}</p>}
             </div>
             <div className="car-list">
                 {
                     cars.map(car => (
-                        <CarItem key={car.id} car={car} onDelete={handleDelete} onTestDrive={onTestDrive} />
-                    )
-                )}
+                            <CarItem key={car.id} car={car} onDelete={handleDelete} onTestDrive={onTestDrive} />
+                        )
+                    )}
             </div>
         </section>
     );

@@ -1,6 +1,8 @@
+// Modal component for scheduling a test drive, handling form submission and displaying results.
 import React, { useEffect, useRef, useState } from 'react';
 
 const TestDriveModal = ({ isOpen, onClose, carId }) => {
+    // State variables for form inputs and modal status
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [TestDriveDate, setTestDriveDate] = useState('');
@@ -10,6 +12,7 @@ const TestDriveModal = ({ isOpen, onClose, carId }) => {
     const [testDriveCar, setTestDriveCar] = useState(null);
     const modalRef = useRef(null);
 
+    // Effect to close modal when clicking outside
     useEffect(() => {
         if (!isOpen) return;
 
@@ -26,6 +29,7 @@ const TestDriveModal = ({ isOpen, onClose, carId }) => {
         };
     }, [isOpen, modalRef, onClose]);
 
+    // Handle form submission to schedule test drive
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -59,6 +63,7 @@ const TestDriveModal = ({ isOpen, onClose, carId }) => {
         setIsResultOpen(true);
     };
 
+    // Download test drive confirmation as a text file
     const handleDownloadConfirmation = () => {
         const carName = testDriveCar ? testDriveCar.name : 'Unknown Car';
 
@@ -70,11 +75,8 @@ Date: ${TestDriveDate}
 Car: ${carName}
         `.trim();
 
-        // Create a Blob for the text file
         const blob = new Blob([confirmationText], { type: 'text/plain' });
-
         const url = URL.createObjectURL(blob);
-
         const a = document.createElement('a');
         a.href = url;
         a.download = 'test_drive_confirmation.txt';

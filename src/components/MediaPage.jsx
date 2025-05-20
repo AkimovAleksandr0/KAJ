@@ -1,3 +1,4 @@
+// MediaPage component that displays a video with a poster image.
 import React from 'react';
 
 const MediaPage = () => {

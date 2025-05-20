@@ -1,5 +1,5 @@
+// Footer component that displays the copyright notice and an empty navigation section.
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
