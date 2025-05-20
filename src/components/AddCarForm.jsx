@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 // Import useNavigate from react-router-dom for navigation after form submission
 import { useNavigate } from 'react-router-dom';
+// Import availableImages
+import { AvailableImages } from "./AvailableImages.jsx";
 
 // Component to add a new car to the inventory
 const AddCarForm = () => {
@@ -15,7 +17,8 @@ const AddCarForm = () => {
     const [fuelConsumption, setFuelConsumption] = useState(''); // Fuel consumption in L/100km
     const [color, setColor] = useState('');              // Color
     const [kilometers, setKilometers] = useState('');    // Mileage in kilometers
-    const [imageFile, setImageFile] = useState(null);    // Selected image file
+    // const [imageFile, setImageFile] = useState(null);    // Selected image file
+    const [selectedImage, setSelectedImage] = useState("default.jpg");
     const navigate = useNavigate();                      // Hook for navigation
 
     // Function to handle form submission
@@ -37,7 +40,7 @@ const AddCarForm = () => {
 
         // Get image name, default to "default.jpg" if no file is selected
         // Note: This assumes the image exists in 'images/' directory; in a real app, file upload would be implemented
-        const imageName = imageFile ? imageFile.name : "default.jpg";
+        const imageName = selectedImage || "default.jpg";
 
         // Create a new car object with the provided details
         const newCar = {
@@ -152,18 +155,28 @@ const AddCarForm = () => {
                     onChange={(e) => setKilometers(e.target.value)}
                 />
 
-                {/* Image file input */}
-                {/* The label acts as a styled button to trigger file selection */}
-                <label htmlFor="car-image" className="upload-button upload-file-button">
-                    {imageFile ? imageFile.name : "Choose file in path ../images/.jpg"}
-                </label>
-                <input
-                    type="file"
-                    id="car-image"
-                    accept="image/*"
-                    onChange={(e) => setImageFile(e.target.files[0])}
-                    style={{ display: 'none' }} // Hide the actual file input for custom styling
-                />
+                {/* Image selection from predefined list */}
+                <label htmlFor="car-image-select">Select Image:</label>
+                <select
+
+                    id="car-image-select"
+                    value={selectedImage}
+                    onChange={(e) => setSelectedImage(e.target.value)}>
+                    {AvailableImages.map((img, index) => (
+                        <option key={index} value={img}>{img}</option>
+                    ))}
+                </select>
+
+                {/* Image preview */}
+                <div className="image-preview">
+                    {selectedImage && (
+                        <img
+                            src={`/images/${selectedImage}`}
+                            alt="Selected"
+                            className="preview-image"
+                        />
+                    )}
+                </div>
 
                 {/* Submit button */}
                 <button type="submit">Add Car</button>
