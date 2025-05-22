@@ -1,6 +1,7 @@
 // CarList component that manages the list of cars, including loading, uploading, and saving functionality.
 import React, { useState, useEffect } from 'react';
 import CarItem from './CarItem';
+import DEFAULT_JSON from '../cars.json';
 
 const CarList = ({ onTestDrive }) => {
     // State for car list, file name, and drag status
@@ -59,6 +60,10 @@ const CarList = ({ onTestDrive }) => {
         handleFileUpload(file);
     };
 
+    const handleDefaultPreset = () => {
+        saveCards(DEFAULT_JSON)
+    }
+
     const handleDrop = (event) => {
         event.preventDefault();
         setIsDragging(false);
@@ -107,7 +112,14 @@ const CarList = ({ onTestDrive }) => {
                 <button className="upload-button" onClick={handleSaveToJSON}>
                     Save JSON
                 </button>
+
             </div>
+
+            {/*Load default preset cars button*/}
+            <div id="load-default-section">
+                <button className="load-default-button" onClick={handleDefaultPreset}> Default cars preset </button>
+            </div>
+
             {/* Drag-and-drop zone for JSON file upload */}
             <div
                 className={`drop-zone ${isDragging ? 'dragging' : ''}`}
@@ -119,6 +131,8 @@ const CarList = ({ onTestDrive }) => {
                     <p>No cars available. Upload a JSON file to get started.</p>
                 ) : (fileName) || "No file chosen"}</p>}
             </div>
+
+
             <div className="car-list">
                 {
                     cars.map(car => (
